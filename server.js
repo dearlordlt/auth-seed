@@ -38,8 +38,6 @@ router.use(function (req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-    console.log(config.allowedUrls.indexOf(req.url),req.url, config.allowedUrls);
-
     if (token) {
 
         // verifies secret and checks exp
