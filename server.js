@@ -1,10 +1,9 @@
-// ./server_app/server.js
-
+// ==========
 // BASE SETUP
-// =============================================================================
+// ==========
 
 var express = require('express');           // express
-var app = express();                    // define app
+var app = express();                        // define app
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
@@ -17,14 +16,15 @@ mongoose.connect(config.database);
 
 app.set('superSecret', config.secret);
 
-app.use(morgan('dev'));                             // use morgan to log requests to the console
+app.use(morgan('dev'));                    // logger
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// ======
 // ROUTES
-// =============================================================================
+// ======
 
-var port = process.env.PORT || 9001;                // port
+var port = process.env.PORT || 9001;       // port
 var router = express.Router();
 
 router.use(function (req, res, next) {
@@ -92,7 +92,7 @@ router.get('/', function (req, res) {
  * Users rest service
  */
 router.route('/users')
-// create a users (accessed at POST http://localhost:9001/api/users)
+// create users (accessed at POST http://localhost:9001/api/users)
     .post(function (req, res) {
 
         //EXAMPLE:
@@ -135,7 +135,7 @@ router.route('/users')
     });
 
 router.route('/users/:user_id')
-// get the bear with that id (accessed at GET http://localhost:9001/api/users/:user_id)
+// get user by id (accessed at GET http://localhost:9001/api/users/:user_id)
     .get(function (req, res) {
         User.findById(req.params.user_id, function (err, user) {
             if (err) {
@@ -162,7 +162,7 @@ router.route('/users/:user_id')
                 user[key] = req.body[key];
             }
 
-            // save the bear
+            // save user
             user.save(function (err) {
                 if (err) {
                     console.log('ERROR UPDATING USER: ' + err.errmsg.red);
@@ -235,12 +235,14 @@ router.post('/authenticate', function (req, res) {
     });
 });
 
-// REGISTER ROUTES -------------------------------
-// all of our routes will be prefixed with /api
+// ======================================================
+// REGISTER ROUTES: all routes will be prefixed with /api
 app.use('/api', router);
+// ======================================================
 
+// ================
 // START THE SERVER
-// =============================================================================
+// ================
 app.listen(port);
 var logMessage = 'API is running on: http://localhost:' + port + '/api';
 console.log(logMessage.green);
