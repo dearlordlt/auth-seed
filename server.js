@@ -61,6 +61,8 @@ router.use(function (req, res, next) {
         });
 
     } else {
+
+        //if there is no token but api path is allowed through config
         next();
     }
 
@@ -74,9 +76,9 @@ router.get('/', function (req, res) {
     res.json({
         message: 'howdy! api is running!',
         users: {
-            getAllUsers: 'GET:       /api/users - Get all the users.',
-            createUser: 'POST:      /api/users - Create a user.',
-            getUserById: 'GET:       /api/users/:userId  Get a single user.',
+            getAllUsers: 'GET:          /api/users - Get all the users.',
+            createUser: 'POST:          /api/users - Create a user.',
+            getUserById: 'GET:          /api/users/:userId  Get a single user.',
             updateUserById: 'PUT:       /api/users/:userId  Update a user with new info.',
             deleteUserById: 'DELETE:    /api/users/:userId  Delete a user.'
         },

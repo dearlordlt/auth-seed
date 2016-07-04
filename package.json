@@ -1,6 +1,6 @@
 {
   "name": "auth-seed",
-  "version": "1.0.1001",
+  "version": "1.0.1002",
   "description": "sample auth app",
   "main": "server.js",
   "dependencies": {
