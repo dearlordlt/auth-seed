@@ -51,7 +51,7 @@ router.use(function (req, res, next) {
             }
         });
 
-    } else if(config.allowedUrls.indexOf(req.url) === -1) {
+    } else if(config.allowedUrls.indexOf(req.url) !== -1) {
 
         // if there is no token
         // return an error
