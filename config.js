@@ -4,6 +4,8 @@ module.exports = {
     'database': 'mongodb://localhost/myappdatabase',
     'allowedUrls': [
         '/api/authenticate',
+        '/authenticate',
+        '/authenticate/',
         '/api',
         '/'
     ]
