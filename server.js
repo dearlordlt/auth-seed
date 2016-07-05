@@ -4,6 +4,7 @@
 
 var express = require('express');           // express
 var app = express();                        // define app
+var cors = require('cors');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
@@ -16,6 +17,7 @@ mongoose.connect(config.database);
 
 app.set('superSecret', config.secret);
 
+app.use(cors());
 app.use(morgan('dev'));                    // logger
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -114,10 +116,10 @@ router.route('/users')
         // save the user and check for errors
         user.save(function (err) {
             if (err) {
-                console.log('ERROR CREATING USER: ' + err.errmsg.red);
+                console.log('ERROR CREATING USER: ' + err);
                 res.status(500).json({error: err});
             } else {
-                console.log('SUCCESS CREATING USER: ' + user.name.blue);
+                console.log('SUCCESS CREATING USER: ' + user.name);
                 res.status(200).json({message: 'User created!'});
             }
         });
@@ -127,10 +129,10 @@ router.route('/users')
     .get(function (req, res) {
         User.find(function (err, users) {
             if (err) {
-                console.log('ERROR GETTING USERS: ' + err.errmsg.red);
+                console.log('ERROR GETTING USERS: ' + err.errmsg);
                 res.status(500).json({error: err});
             } else {
-                console.log('SUCCESS GETTING USERS'.green);
+                console.log('SUCCESS GETTING USERS');
                 res.status(200).json(users);
             }
         });
@@ -141,10 +143,10 @@ router.route('/users/:user_id')
     .get(function (req, res) {
         User.findById(req.params.user_id, function (err, user) {
             if (err) {
-                console.log('ERROR GETTING USER: ' + err.errmsg.red);
+                console.log('ERROR GETTING USER: ' + err.errmsg);
                 res.status(500).json({error: err});
             } else {
-                console.log('SUCCESS GETTING USER'.green + (' id:' + req.params.user_id).red);
+                console.log('SUCCESS GETTING USER'.green + (' id:' + req.params.user_id));
                 res.status(200).json(user);
             }
         });
@@ -155,7 +157,7 @@ router.route('/users/:user_id')
         User.findById(req.params.user_id, function (err, user) {
 
             if (err) {
-                console.log('ERROR UPDATING USER: ' + err.errmsg.red);
+                console.log('ERROR UPDATING USER: ' + err.errmsg);
                 res.status(500).json({error: err});
                 return 0;
             }
@@ -167,10 +169,10 @@ router.route('/users/:user_id')
             // save user
             user.save(function (err) {
                 if (err) {
-                    console.log('ERROR UPDATING USER: ' + err.errmsg.red);
+                    console.log('ERROR UPDATING USER: ' + err.errmsg);
                     res.status(500).json({error: err});
                 } else {
-                    console.log('SUCCESS UPDATING USER'.green);
+                    console.log('SUCCESS UPDATING USER');
                     res.status(200).json({success: 'User is updated'});
                 }
             });
@@ -182,10 +184,10 @@ router.route('/users/:user_id')
             _id: req.params.user_id
         }, function (err, user) {
             if (err) {
-                console.log('ERROR DELETING USER: ' + err.errmsg.red);
+                console.log('ERROR DELETING USER: ' + err.errmsg);
                 res.status(500).json({error: err});
             } else {
-                console.log('SUCCESS DELETING USER'.green + (' id:' + req.params.user_id).red);
+                console.log('SUCCESS DELETING USER'.green + (' id:' + req.params.user_id));
                 res.status(200).json({message: 'Successfully deleted user'});
             }
         });
@@ -204,7 +206,7 @@ router.post('/authenticate', function (req, res) {
     }, function (err, user) {
 
         if (err) {
-            console.log('ERROR AUTH USER: ' + err.errmsg.red);
+            console.log('ERROR AUTH USER: ' + err.errmsg);
             res.status(403).json({error: err});
             return;
         }
@@ -247,5 +249,5 @@ app.use('/api', router);
 // ================
 app.listen(port);
 var logMessage = 'API is running on: http://localhost:' + port + '/api';
-console.log(logMessage.green);
+console.log(logMessage);
 
