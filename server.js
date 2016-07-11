@@ -10,6 +10,7 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var config = require('./config');
 var User = require('./models/users');
+var Character = require('./models/characters');
 var colors = require('colors');            // use colors in console
 var jwt = require('jsonwebtoken');
 
@@ -47,7 +48,11 @@ router.use(function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, app.get('superSecret'), function (err, decoded) {
             if (err) {
-                return res.status(403).send({success: false, message: 'Failed to authenticate token.'});
+                return res.status(403).send({
+                    success: false,
+                    message: 'Failed to authenticate token.',
+                    error: err
+                });
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
@@ -91,6 +96,11 @@ router.get('/', function (req, res) {
         }
     });
 });
+
+/**
+ * Characters rest service
+ */
+require('./character.rest')(router, Character);
 
 /**
  * Users rest service
