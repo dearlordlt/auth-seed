@@ -92,6 +92,10 @@ router.get('/', function (req, res) {
             updateUserById: 'PUT:       /api/users/:userId  Update a user with new info.',
             deleteUserById: 'DELETE:    /api/users/:userId  Delete a user.'
         },
+        comments: {
+            getAllComments: 'GET:          /api/comments - Get all comments.',
+            createComment: 'POST:          /api/comments - Create a comment.',
+        },
         authenticate: {
             authenticate: 'POST:      /api/authenticate - send username and password to get token'
         }
