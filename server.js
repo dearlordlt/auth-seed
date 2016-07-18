@@ -10,6 +10,7 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var config = require('./config');
 var User = require('./models/users');
+var Comment = require('./models/comments');
 var Character = require('./models/characters');
 var colors = require('colors');            // use colors in console
 var jwt = require('jsonwebtoken');
@@ -106,6 +107,11 @@ require('./character.rest')(router, Character);
  * Users rest service
  */
 require('./users.rest')(router, User);
+
+/**
+ * Comments rest service
+ */
+require('./comments.rest')(router, Comment);
 
 /**
  * Authenticate rest service
