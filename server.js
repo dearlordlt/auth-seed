@@ -154,7 +154,9 @@ router.post('/authenticate', function (req, res) {
                 res.json({
                     success: true,
                     message: 'Token is set!',
-                    token: token
+                    token: token,
+                    userID: user._id,
+                    username: user.username
                 });
             }
 
