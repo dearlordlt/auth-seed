@@ -7,9 +7,7 @@ module.exports = {
         '/authenticate',
         '/authenticate/',
         '/api',
-        '/',
-        '/comments',
-        '/comments/'
+        '/'
     ]
 
 };
