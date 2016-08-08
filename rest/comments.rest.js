@@ -16,7 +16,7 @@ module.exports = function (router, Comment) {
                 isDeleted: false
             });
 
-            // save the user and check for errors
+            // save the comment and check for errors
             comment.save(function (err) {
                 if (err) {
                     console.log('ERROR WRITING COMMENT: ' + err);
@@ -39,4 +39,18 @@ module.exports = function (router, Comment) {
                 }
             });
         });
+
+    router.route('/comments/:topic')
+    // get comments by topic (accessed at GET http://localhost:9001/api/comments/:topic)
+        .get(function (req, res) {
+            Comment.find({topicId: req.params.topic, isDeleted: false}, function (err, comments) {
+                if (err) {
+                    console.log('ERROR GETTING COMMENTS: ' + err.errmsg);
+                    res.status(500).json({error: err});
+                } else {
+                    console.log('SUCCESS GETTING COMMENTS');
+                    res.status(200).json(comments);
+                }
+            });
+        })
 };

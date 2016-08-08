@@ -96,8 +96,9 @@ router.get('/', function (req, res) {
             deleteUserById: 'DELETE:    /api/users/:userId  Delete a user.'
         },
         comments: {
-            getAllComments: 'GET:          /api/comments - Get all comments.',
-            createComment: 'POST:          /api/comments - Create a comment.',
+            getAllComments: 'GET:       /api/comments - Get all comments.',
+            createComment: 'POST:       /api/comments - Create a comment.',
+            getCommentsByTopic: 'GET:   /api/comments/:topic - get comments by topic.'
         },
         authenticate: {
             authenticate: 'POST:      /api/authenticate - send username and password to get token'
@@ -108,17 +109,17 @@ router.get('/', function (req, res) {
 /**
  * Characters rest service
  */
-require('./character.rest')(router, Character);
+require('./rest/character.rest.js')(router, Character);
 
 /**
  * Users rest service
  */
-require('./users.rest')(router, User);
+require('./rest/users.rest.js')(router, User);
 
 /**
  * Comments rest service
  */
-require('./comments.rest')(router, Comment);
+require('./rest/comments.rest.js')(router, Comment);
 
 /**
  * Authenticate rest service
@@ -157,7 +158,9 @@ router.post('/authenticate', function (req, res) {
                 res.json({
                     success: true,
                     message: 'Token is set!',
-                    token: token
+                    token: token,
+                    userID: user._id,
+                    username: user.username
                 });
             }
 
