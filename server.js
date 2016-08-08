@@ -46,6 +46,9 @@ router.use(function (req, res, next) {
 
     if (token) {
 
+        /*var decoded = jwt.decode(token, {complete: true});
+        console.log(decoded.header);
+        console.log(decoded.payload);*/
         // verifies secret and checks exp
         jwt.verify(token, app.get('superSecret'), function (err, decoded) {
             if (err) {
